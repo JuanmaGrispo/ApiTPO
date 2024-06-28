@@ -5,8 +5,11 @@ import com.apiTPO.technologyHouse.app.models.Product;
 import com.apiTPO.technologyHouse.app.models.ShoppingCart;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CartProductRepository extends JpaRepository<CartProduct, Long> {
     Optional<CartProduct> findByShoppingCartAndProduct(ShoppingCart shoppingCart, Product product);
+    void deleteAllByShoppingCart(ShoppingCart shoppingCart);
+    List<CartProduct> findByShoppingCart(ShoppingCart shoppingCart);
 }

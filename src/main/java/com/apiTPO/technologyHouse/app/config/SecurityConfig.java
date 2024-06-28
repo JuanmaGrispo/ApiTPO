@@ -27,7 +27,7 @@ public class SecurityConfig {
                                 .csrf(AbstractHttpConfigurer::disable)
                                 .authorizeHttpRequests(req -> req.requestMatchers("/api/v1/auth/**").permitAll()
                                                 .requestMatchers("/error/**").permitAll()
-                                                .requestMatchers("/categories/create").hasAnyAuthority(Role.ADMIN.name())
+                                                .requestMatchers("/api/categories/create").hasAnyAuthority(Role.ADMIN.name())
                                                 .requestMatchers("/api/products/create").hasAnyAuthority(Role.ADMIN.name())
                                                 .requestMatchers("/api/users/**").hasAnyAuthority(Role.ADMIN.name())
                                                 .requestMatchers("/api/shoppingCart/getAll").hasAnyAuthority(Role.ADMIN.name())

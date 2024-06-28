@@ -1,5 +1,6 @@
 package com.apiTPO.technologyHouse.app.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,5 +22,6 @@ public class File {
 
     @ManyToOne
     @JoinColumn(name = "report_id")
+    @JsonBackReference
     private Report report;
 }

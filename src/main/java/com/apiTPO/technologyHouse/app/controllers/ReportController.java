@@ -1,12 +1,13 @@
 package com.apiTPO.technologyHouse.app.controllers;
 
-import com.apiTPO.technologyHouse.app.dtos.ReportDTO;
 import com.apiTPO.technologyHouse.app.models.Report;
 import com.apiTPO.technologyHouse.app.services.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -18,8 +19,8 @@ public class ReportController {
 
     @GetMapping
     public ResponseEntity<List<Report>> getAll() {
-        List<Report> products = reportService.getAll();
-        return ResponseEntity.ok(products);
+        List<Report> reports = reportService.getAll();
+        return ResponseEntity.ok(reports);
     }
 
     @GetMapping("/{id}")
@@ -29,8 +30,14 @@ public class ReportController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Report> create(@RequestBody ReportDTO reportDTO) {
-        Report reportCreated = reportService.create(reportDTO);
+    public ResponseEntity<Report> create(
+            @RequestParam("name") String name,
+            @RequestParam("surname") String surname,
+            @RequestParam("problem") String problem,
+            @RequestParam("description") String description,
+            @RequestParam("images") MultipartFile[] files) throws IOException {
+
+        Report reportCreated = reportService.create(name, surname, problem, description, files);
         return ResponseEntity.ok(reportCreated);
     }
 }

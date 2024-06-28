@@ -3,9 +3,11 @@ package com.apiTPO.technologyHouse.app.services;
 import com.apiTPO.technologyHouse.app.dtos.ProductDTO;
 import com.apiTPO.technologyHouse.app.models.Category;
 import com.apiTPO.technologyHouse.app.models.Product;
+import com.apiTPO.technologyHouse.app.models.SortStrategy;
 import com.apiTPO.technologyHouse.app.repositories.CategoryRepository;
 import com.apiTPO.technologyHouse.app.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +24,17 @@ public class ProductService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Product> getAll() {
-        return productRepository.findAll();
+    public List<Product> getAll(SortStrategy strategy) {
+        switch (strategy) {
+            case NONE:
+                return productRepository.findAll();
+            case MINMAX:
+                return productRepository.findAll(Sort.by(Sort.Direction.ASC, "price"));
+            case MAXMIN:
+                return productRepository.findAll(Sort.by(Sort.Direction.DESC, "price"));
+            default:
+                throw new IllegalArgumentException("Unknown SortStrategy: " + strategy);
+        }
     }
 
     public Product getById(Long id) {
@@ -39,6 +50,11 @@ public class ProductService {
         product.setCategory(category);
 
         return productRepository.save(product);
+    }
+
+    public List<Product> getByCategory(Long categoryId) {
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category not found"));
+        return productRepository.findByCategory(category);
     }
 }
 

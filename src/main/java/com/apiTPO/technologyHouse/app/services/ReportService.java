@@ -1,15 +1,14 @@
 package com.apiTPO.technologyHouse.app.services;
 
-import com.apiTPO.technologyHouse.app.dtos.ImageDTO;
-import com.apiTPO.technologyHouse.app.dtos.ReportDTO;
 import com.apiTPO.technologyHouse.app.models.File;
 import com.apiTPO.technologyHouse.app.models.Report;
 import com.apiTPO.technologyHouse.app.repositories.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -27,30 +26,27 @@ public class ReportService {
     }
 
     public Report getById(Long id) {
-        return reportRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return reportRepository.findById(id).orElseThrow(() -> new RuntimeException("Report not found"));
     }
 
-    public Report create(ReportDTO reportDTO) {
+    public Report create(String name, String surname, String problem, String description, MultipartFile[] files) throws IOException {
         Report report = new Report();
-        report.setName(reportDTO.getName());
-        report.setSurname(reportDTO.getSurname());
-        report.setProblem(reportDTO.getProblem());
-        report.setDescription(reportDTO.getDescription());
+        report.setName(name);
+        report.setSurname(surname);
+        report.setProblem(problem);
+        report.setDescription(description);
 
-        List<File> files = new ArrayList<>();
-        for (ImageDTO imageDTO : reportDTO.getImages()) {
+        List<File> fileEntities = new ArrayList<>();
+        for (MultipartFile file : files) {
             File fileEntity = new File();
-
-            byte[] decodedBytes = Base64.getDecoder().decode(imageDTO.getData());
-            fileEntity.setName(imageDTO.getName());
-            fileEntity.setData(decodedBytes);
-            fileEntity.setExtension(imageDTO.getExtension());
+            fileEntity.setName(file.getOriginalFilename());
+            fileEntity.setExtension(file.getContentType());
+            fileEntity.setData(file.getBytes());
             fileEntity.setReport(report);
-            files.add(fileEntity);
+            fileEntities.add(fileEntity);
         }
 
-        report.setImages(files);
+        report.setImages(fileEntities);
         return reportRepository.save(report);
     }
 }
-

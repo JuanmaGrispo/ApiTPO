@@ -54,12 +54,23 @@ public class ShoppingCartService {
     }
 
     @Transactional
-    public Boolean delete(CartProductIdDTO cartProductIdDTO, ShoppingCart cart) {
+    public Boolean deleteProduct(CartProductIdDTO cartProductIdDTO, ShoppingCart cart) {
         CartProduct cartProduct = cartProductRepository.findById(cartProductIdDTO.getCartProductId())
                 .orElse(null);
 
         if (cartProduct != null && cartProduct.getShoppingCart().getId().equals(cart.getId())) {
             cartProductRepository.deleteById(cartProductIdDTO.getCartProductId());
+            return true;
+        }
+        return false;
+    }
+
+    @Transactional
+    public Boolean emptyCart(ShoppingCart shoppingCart) {
+        List<CartProduct> cartProducts = cartProductRepository.findByShoppingCart(shoppingCart);
+
+        if (cartProducts != null && !cartProducts.isEmpty()) {
+            cartProductRepository.deleteAllByShoppingCart(shoppingCart);
             return true;
         }
         return false;

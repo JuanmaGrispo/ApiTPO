@@ -50,7 +50,7 @@ public class ShoppingCartController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         ShoppingCart cart = shoppingCartRepository.findByUser(user).orElseThrow(() -> new RuntimeException("ShoppingCart not found"));
-        return ResponseEntity.ok(shoppingCartService.delete(cartProductIdDTO, cart));
+        return ResponseEntity.ok(shoppingCartService.deleteProduct(cartProductIdDTO, cart));
     }
 
     @GetMapping("/getAll")
@@ -59,4 +59,21 @@ public class ShoppingCartController {
         return ResponseEntity.ok(cart);
     }
 
+    @DeleteMapping("/emptyCart")
+    public ResponseEntity<Boolean> emptyCart() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        ShoppingCart cart = shoppingCartRepository.findByUser(user).orElseThrow(() -> new RuntimeException("ShoppingCart not found"));
+        Boolean result = shoppingCartService.emptyCart(cart);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/confirm")
+    public ResponseEntity<Boolean> confirm() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        ShoppingCart cart = shoppingCartRepository.findByUser(user).orElseThrow(() -> new RuntimeException("ShoppingCart not found"));
+        Boolean result = shoppingCartService.emptyCart(cart);
+        return ResponseEntity.ok(result);
+    }
 }
