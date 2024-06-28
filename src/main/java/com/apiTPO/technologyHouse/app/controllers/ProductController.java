@@ -20,9 +20,6 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<Product>> getAll() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userEmail = authentication.getName();
-        System.out.println(userEmail);
         List<Product> products = productService.getAll();
         return ResponseEntity.ok(products);
     }
