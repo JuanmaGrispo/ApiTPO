@@ -2,7 +2,6 @@ package com.apiTPO.technologyHouse.app.services;
 
 import com.apiTPO.technologyHouse.app.dtos.CartProductDTO;
 import com.apiTPO.technologyHouse.app.dtos.CartProductIdDTO;
-import com.apiTPO.technologyHouse.app.dtos.UserIdDTO;
 import com.apiTPO.technologyHouse.app.models.CartProduct;
 import com.apiTPO.technologyHouse.app.models.Product;
 import com.apiTPO.technologyHouse.app.models.ShoppingCart;

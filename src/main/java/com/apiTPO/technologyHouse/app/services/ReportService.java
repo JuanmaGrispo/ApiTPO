@@ -2,6 +2,7 @@ package com.apiTPO.technologyHouse.app.services;
 
 import com.apiTPO.technologyHouse.app.models.File;
 import com.apiTPO.technologyHouse.app.models.Report;
+import com.apiTPO.technologyHouse.app.models.User;
 import com.apiTPO.technologyHouse.app.repositories.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

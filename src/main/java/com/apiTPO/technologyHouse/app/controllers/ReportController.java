@@ -17,13 +17,13 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-    @GetMapping
+    @GetMapping("/getAll")
     public ResponseEntity<List<Report>> getAll() {
         List<Report> reports = reportService.getAll();
         return ResponseEntity.ok(reports);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/byId/{id}")
     public ResponseEntity<Report> getById(@PathVariable Long id) {
         Report report = reportService.getById(id);
         return ResponseEntity.ok(report);

@@ -1,5 +1,6 @@
 package com.apiTPO.technologyHouse.app.services;
 
+import com.apiTPO.technologyHouse.app.dtos.UserAuthDTO;
 import com.apiTPO.technologyHouse.app.dtos.UserIdDTO;
 import com.apiTPO.technologyHouse.app.models.ShoppingCart;
 import com.apiTPO.technologyHouse.app.repositories.ShoppingCartRepository;
@@ -65,6 +66,11 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
+                .user(UserAuthDTO.builder()
+                        .id(user.getId())
+                        .email(user.getEmail())
+                        .role(user.getRole())
+                        .build())
                 .build();
     }
 

@@ -41,7 +41,7 @@ public class User implements UserDetails {
     private List<Order> orders;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonManagedReference
     private ShoppingCart cart;
 
     @Enumerated(EnumType.STRING)

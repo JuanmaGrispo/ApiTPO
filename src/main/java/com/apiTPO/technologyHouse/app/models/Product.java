@@ -19,6 +19,9 @@ public class Product {
     private String name;
     private String description;
     private float price;
+    @Column(columnDefinition = "LONGTEXT")
+    private String b64;
+
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)

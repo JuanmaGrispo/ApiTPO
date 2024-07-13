@@ -8,4 +8,5 @@ public class ProductDTO {
     private String description;
     private float price;
     private Long categoryId;
+    private String b64;
 }
